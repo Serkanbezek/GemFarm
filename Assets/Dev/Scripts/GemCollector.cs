@@ -5,10 +5,11 @@ using DG.Tweening;
 
 public class GemCollector : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _gemsOnPlayer;
+    public List<GameObject> GemsOnPlayer;
 
     [SerializeField] private Transform _gemHolder;
 
+    [SerializeField] private float _scaleNeededToCollect;
     [SerializeField] private float _gemJumpPower;
     [SerializeField] private float _gemJumpDuration;
     [SerializeField] private float _spaceBetweenGems;
@@ -19,7 +20,7 @@ public class GemCollector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Gem gem = other.GetComponent<Gem>();
+        GemData gem = other.GetComponent<GemData>();
         if (gem != null)
         {
             CollectGem(other.gameObject);
@@ -29,8 +30,10 @@ public class GemCollector : MonoBehaviour
     private void CollectGem(GameObject gem)
     {
         gem.GetComponent<BoxCollider>().enabled = false;
+        gem.transform.DOKill(false);
+        gem.transform.GetComponentInParent<GemSpawner>().SpawnRandomGem();
         gem.transform.SetParent(_gemHolder);
-        _gemsOnPlayer.Add(gem);
+        GemsOnPlayer.Add(gem);
         RaiseGemTargetPosition();
         gem.transform.DOLocalJump(_newGemTargetPosition, _gemJumpPower, _gemJumpNum, _gemJumpDuration)
             .SetEase(Ease.Linear).SetLink(gem);
