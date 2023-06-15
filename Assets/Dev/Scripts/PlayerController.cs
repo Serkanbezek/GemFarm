@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        MovePlayer();
+    }
+
+
+
+    private void MovePlayer()
+    {
         float horizontalInput = _floatingJoystick.Horizontal;
         float verticalInput = _floatingJoystick.Vertical;
         Vector3 movementVector = new(horizontalInput * _movementSpeed * Time.deltaTime, 0, verticalInput * _movementSpeed * Time.deltaTime);
@@ -34,5 +41,4 @@ public class PlayerController : MonoBehaviour
             _animatorController.PlayIdleAnimation();
         }
     }
-
 }
