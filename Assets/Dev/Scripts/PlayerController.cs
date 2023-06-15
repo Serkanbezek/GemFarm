@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
     private void MovePlayer()
     {
         float horizontalInput = _floatingJoystick.Horizontal;
