@@ -39,7 +39,7 @@ public class GemCollector : MonoBehaviour
             .SetEase(Ease.Linear).SetLink(gem);
     }
 
-    private void LowerGemTargetPosition()
+    public void LowerGemTargetPosition()
     {
         _newGemTargetPosition.y -= _spaceBetweenGems;
     }
