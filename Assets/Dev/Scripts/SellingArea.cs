@@ -43,6 +43,7 @@ public class SellingArea : MonoBehaviour
             int gemSalePrice = Mathf.RoundToInt(gemToSellData.GetGemPrice() + gemToSell.transform.localScale.x * 100);
             string gemName = gemToSellData.GetGemName();
             GemHasBeenSold?.Invoke(gemSalePrice, gemName);
+            gemCollector.LowerGemTargetPosition();
             Destroy(gemToSell, 0.05f);
             yield return new WaitForSeconds(_sellingDelay);
         }
