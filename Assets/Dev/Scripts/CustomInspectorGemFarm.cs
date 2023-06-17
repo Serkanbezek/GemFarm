@@ -3,7 +3,7 @@ using UnityEditor;
 
 
 [CustomEditor(typeof(GemFarmGenerator))]
-public class CustomInspector : Editor
+public class CustomInspectorGemFarm : Editor
 {
     public override void OnInspectorGUI()
     {

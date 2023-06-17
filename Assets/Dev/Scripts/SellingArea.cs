@@ -5,7 +5,7 @@ using System;
 
 public class SellingArea : MonoBehaviour
 {
-    public static event Action<int, string, Sprite> GemHasBeenSold;
+    public static event Action<int, string> GemHasBeenSold;
 
     [SerializeField] private float _sellingDelay;
 
@@ -42,8 +42,7 @@ public class SellingArea : MonoBehaviour
             GemData gemToSellData = gemToSell.GetComponent<GemData>();
             int gemSalePrice = Mathf.RoundToInt(gemToSellData.GetGemPrice() + gemToSell.transform.localScale.x * 100);
             string gemName = gemToSellData.GetGemName();
-            Sprite gemIcon = gemToSellData.GetGemIcon();
-            GemHasBeenSold?.Invoke(gemSalePrice, gemName, gemIcon);
+            GemHasBeenSold?.Invoke(gemSalePrice, gemName);
             Destroy(gemToSell, 0.05f);
             yield return new WaitForSeconds(_sellingDelay);
         }
