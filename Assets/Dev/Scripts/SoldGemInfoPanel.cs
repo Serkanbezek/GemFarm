@@ -17,32 +17,33 @@ public class SoldGemInfoPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        SellingArea.GemHasBeenSold += IncreaseCollectedCount;
+        SellingArea.GemHasBeenSold += IncreaseCollectedCountAndTotalGold;
     }
 
     private void OnDisable()
     {
-        SellingArea.GemHasBeenSold -= IncreaseCollectedCount;
+        SellingArea.GemHasBeenSold -= IncreaseCollectedCountAndTotalGold;
     }
 
     private void Start()
     {
         FillPanelInfo();
-        _gemData = _gemPrefab.GetComponent<GemData>();
-        _gemCountText.text = "Collected Count: " + PlayerPrefs.GetInt(_gemData.GetGemName());
     }
 
-    public void FillPanelInfo()
+    private void FillPanelInfo()
     {
-        GemData gemData = _gemPrefab.GetComponent<GemData>();
-        _gemIcon.sprite = gemData.GetGemIcon();
-        _gemTypeText.text = "Gem Type: " + gemData.GetGemName();
+        _gemData = _gemPrefab.GetComponent<GemData>();
+        _gemIcon.sprite = _gemData.GetGemIcon();
+        _gemTypeText.text = "Gem Type: " + _gemData.GetGemName();
+        _gemCountText.text = "Collected Count: " + PlayerPrefs.GetInt(_gemData.GetGemName());
+
     }
 
-    private void IncreaseCollectedCount(int gemSalePrice, string soldGemName)
+    private void IncreaseCollectedCountAndTotalGold(int gemSalePrice, string soldGemName)
     {
         if (soldGemName == _gemData.GetGemName())
         {
+            UIManager.Instance.IncreaseTotalGold(gemSalePrice);
             PlayerPrefs.SetInt(soldGemName, PlayerPrefs.GetInt(soldGemName) + 1);
             _gemCountText.text = "Collected Count: " + PlayerPrefs.GetInt(_gemData.GetGemName());
         }
